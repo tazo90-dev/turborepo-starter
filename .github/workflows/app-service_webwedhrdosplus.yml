@@ -31,11 +31,20 @@ jobs:
           pnpm install
           pnpm build
       
+#       - name: Upload artifact for deployment job
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: node-app
+#           path: .
+      - name: Zip all files for upload between jobs
+            # IMPORTANT: .next is a hidden folder and will NOT be included in the zip unless we specify it
+        run: zip next.zip ./* .next -qr
+              
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: next.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-
+          
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
@@ -57,4 +66,7 @@ jobs:
           app-name: 'webwedhrdosplus'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4FCB5804FC8747A79620199C0A7B6EFE }}
-          package: .
+          package: next.zip
+          
+      - name: Delete zip file
+        run: rm next.zip
