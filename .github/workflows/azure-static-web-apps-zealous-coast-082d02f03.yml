@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - apps/web/**
+      - .github/workflows/azure-static-web-apps-zealous-coast-082d02f03.yml
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
@@ -43,10 +46,11 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           skip_app_build: true
+          skip_api_build: true
           #app_build_command: 'pnpm run build'
-          app_location: "apps/web/dist" #"apps/web/dist" # App source code path
+          app_location: "/" #"apps/web/dist" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional
+          output_location: "out" # Built app content directory - optional
           is_static_export: true
           ###### End of Repository/Build Configurations ######
 
