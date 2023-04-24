@@ -1,5 +1,5 @@
 module.exports = {
-  distDir: 'dist',
+  // distDir: 'dist',
   reactStrictMode: true,
   transpilePackages: ["ui"],
   trailingSlash: true
